@@ -26,7 +26,7 @@ public class Bouncy extends Application {
     final int CEILING = 0;
     final int LEFT_WALL = 0;
     final int RIGHT_WALL = SCREEN_WIDTH - SIZE;
-    final int AMOUNT = 30;
+    final int AMOUNT = 50;
     final double FRAME_MULTIPLIER = 60f / FRAMERATE;
     final double gravitationalConstant = 9.81 / FRAMERATE;
     double gravityMultiplier = 1;
