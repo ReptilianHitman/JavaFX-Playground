@@ -23,6 +23,7 @@
 
     <build>
         <plugins>
+            <!-- JavaFX Maven Plugin -->
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
@@ -31,7 +32,7 @@
                     <execution>
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>Bouncy</mainClass>
+                            <mainClass>${mainClass}</mainClass>
                         </configuration>
                     </execution>
                 </executions>
