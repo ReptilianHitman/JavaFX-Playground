@@ -1,3 +1,5 @@
+package fun;
+
 import game.CardStack;
 import javafx.application.Application;
 import javafx.scene.Scene;

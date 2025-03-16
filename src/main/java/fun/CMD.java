@@ -1,3 +1,5 @@
+package fun;
+
 import javafx.application.Application;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
