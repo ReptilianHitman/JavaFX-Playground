@@ -71,7 +71,7 @@ public class Waves extends Application {
         PixelWriter pw = c.getGraphicsContext2D().getPixelWriter();
 
         for (double i = -(WIDTH / 2f); i < WIDTH / 2f; i += 0.01) {
-            pw.setArgb((int) (WIDTH / 2 + i), (int) (HEIGHT / 2 + scale * Math.tan(i / scale)), colour);
+            pw.setArgb((int) (WIDTH / 2f + i), (int) (HEIGHT / 2f + scale * Math.tan(i / scale)), colour);
         }
     }
 }
