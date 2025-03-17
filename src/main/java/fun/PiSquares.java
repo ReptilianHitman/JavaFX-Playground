@@ -16,7 +16,7 @@ public class PiSquares extends Application {
         Rectangle smaller = new MyRect(SIZE, SIZE, Color.BLUE);
         Rectangle larger = new MyRect((int) (SIZE * 1.5), (int) (SIZE * 1.5), Color.BLUE);
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis((double) 1000 / 60), _ -> move(smaller, larger)));
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis((double) 1000 / 60), e -> move(smaller, larger)));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
     }
