@@ -69,7 +69,7 @@ public class Bouncy extends Application {
 
         for (Rect rect : rects) {
             rect.setY(FLOOR);
-            root.getChildren().add(rect.getRect());
+            root.getChildren().add(rect);
         }
 
         Scene scene = new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -92,13 +92,13 @@ public class Bouncy extends Application {
 
     private void move(List<Rect> rects) {
         for (Rect rect : rects) {
-            if (Math.abs(rect.horizontalSpeed) < 0.1 && Math.abs(rect.verticalSpeed) < 1 && rect.getY() > FLOOR - 0.1) {
+            if (Math.abs(rect.getHorizontalSpeed()) < 0.1 && Math.abs(rect.getVerticalSpeed()) < 1 && rect.getY() > FLOOR - 0.1) {
                 rect.setX(SCREEN_WIDTH / 2f);
                 rect.setY(SCREEN_HEIGHT / 2f);
                 r = new Random();
                 rect.setFill(Color.rgb(r.nextInt(255), r.nextInt(255), r.nextInt(255)));
-                rect.verticalSpeed = new Random().nextInt(-(SCREEN_HEIGHT / 20), SCREEN_HEIGHT / 20);
-                rect.horizontalSpeed = new Random().nextInt(-(SCREEN_WIDTH / 20), SCREEN_WIDTH / 20);
+                rect.setVerticalSpeed(new Random().nextInt(-(SCREEN_HEIGHT / 20), SCREEN_HEIGHT / 20));
+                rect.setHorizontalSpeed(new Random().nextInt(-(SCREEN_WIDTH / 20), SCREEN_WIDTH / 20));
             }
 
             // Bouncing off each other
@@ -111,26 +111,26 @@ public class Bouncy extends Application {
 
             // Bouncing off the floor and accelerating due to gravity
             if (rect.getY() < FLOOR && rect.getY() > CEILING)
-                rect.verticalSpeed += gravitationalConstant * gravityMultiplier;
+                rect.addVerticalSpeed(gravitationalConstant * gravityMultiplier);
             else {
                 r = new Random();
                 rect.setFill(Color.rgb(r.nextInt(255), r.nextInt(255), r.nextInt(255)));
-                rect.verticalSpeed *= -bounciness;
-                rect.horizontalSpeed *= 1 - bounciness * bounciness;
-                rect.setY(rect.getY() + rect.verticalSpeed);
+                rect.multiplyVerticalSpeed(-bounciness);
+                rect.multiplyHorizontalSpeed(1 - bounciness * bounciness);
+                rect.setY(rect.getY() + rect.getVerticalSpeed());
             }
 
             // Bouncing off the walls
             if (rect.getX() < LEFT_WALL || rect.getX() > RIGHT_WALL) {
                 r = new Random();
                 rect.setFill(Color.rgb(r.nextInt(255), r.nextInt(255), r.nextInt(255)));
-                rect.horizontalSpeed *= -bounciness;
-                rect.setX(rect.getX() + rect.horizontalSpeed);
+                rect.multiplyHorizontalSpeed(-bounciness);
+                rect.setX(rect.getX() + rect.getHorizontalSpeed());
             }
 
             // Moving horizontally and vertically
-            rect.setX(rect.getX() + rect.horizontalSpeed * FRAME_MULTIPLIER);
-            rect.setY(rect.getY() + rect.verticalSpeed * FRAME_MULTIPLIER);
+            rect.setX(rect.getX() + rect.getHorizontalSpeed() * FRAME_MULTIPLIER);
+            rect.setY(rect.getY() + rect.getVerticalSpeed() * FRAME_MULTIPLIER);
         }
     }
 
