@@ -45,12 +45,12 @@ public class Rect extends Rectangle {
         this.horizontalSpeed += add;
     }
 
-    public void invertHorizontalSpeed() {
-        this.horizontalSpeed = -this.horizontalSpeed;
-    }
-
     public void multiplyHorizontalSpeed(double mult) {
         this.horizontalSpeed *= mult;
+    }
+
+    public void invertHorizontalSpeed() {
+        this.horizontalSpeed = -this.horizontalSpeed;
     }
 
     public void addX(double delta) {

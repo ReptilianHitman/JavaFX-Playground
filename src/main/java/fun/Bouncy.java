@@ -133,12 +133,4 @@ public class Bouncy extends Application {
             rect.setY(rect.getY() + rect.getVerticalSpeed() * FRAME_MULTIPLIER);
         }
     }
-
-    private void verticalInvert(Rect rect) {
-
-    }
-
-    private void horizontalInvert(Rect rect) {
-
-    }
 }
