@@ -16,7 +16,6 @@ import javafx.util.Duration;
 import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Random;
 
 public class Bouncy extends Application {
@@ -24,11 +23,11 @@ public class Bouncy extends Application {
     final int SIZE = 100;
     final int SCREEN_WIDTH = 1920;
     final int SCREEN_HEIGHT = 1080;
-    final int FLOOR = SCREEN_HEIGHT - SIZE;
+    final int FLOOR = SCREEN_HEIGHT;
     final int CEILING = 0;
     final int LEFT_WALL = 0;
-    final int RIGHT_WALL = SCREEN_WIDTH - SIZE;
-    final int AMOUNT = 50;
+    final int RIGHT_WALL = SCREEN_WIDTH;
+    final int AMOUNT = 20;
     final double FRAME_MULTIPLIER = 60f / FRAMERATE;
     final double gravitationalConstant = 9.81 / FRAMERATE;
     double gravityMultiplier = 1;
@@ -91,46 +90,26 @@ public class Bouncy extends Application {
     }
 
     private void move(List<Rect> rects) {
-        for (Rect rect : rects) {
-            if (Math.abs(rect.getHorizontalSpeed()) < 0.1 && Math.abs(rect.getVerticalSpeed()) < 1 && rect.getY() > FLOOR - 0.1) {
+        for (int i = 0; i < rects.size(); i++) {
+            Rect rect = rects.get(i);
+
+            if (Math.abs(rect.getHorizontalSpeed()) < 0.1 && Math.abs(rect.getVerticalSpeed()) < 1 && rect.getY() + rect.getHeight() > FLOOR - 0.1) {
                 rect.setX(SCREEN_WIDTH / 2f);
                 rect.setY(SCREEN_HEIGHT / 2f);
                 r = new Random();
                 rect.setFill(Color.rgb(r.nextInt(255), r.nextInt(255), r.nextInt(255)));
-                rect.setVerticalSpeed(new Random().nextInt(-(SCREEN_HEIGHT / 20), SCREEN_HEIGHT / 20));
-                rect.setHorizontalSpeed(new Random().nextInt(-(SCREEN_WIDTH / 20), SCREEN_WIDTH / 20));
+                rect.setVerticalSpeed(new Random().nextInt(-(SCREEN_HEIGHT / 50), SCREEN_HEIGHT / 50));
+                rect.setHorizontalSpeed(new Random().nextInt(-(SCREEN_WIDTH / 50), SCREEN_WIDTH / 50));
             }
 
-            // Bouncing off each other
-            for (Rect rec : rects) {
-                if (Objects.equals(rec, rect))
-                    continue;
-
-
+            for (int j = i; j < rects.size(); j++) {
+                rect.checkCollision(rects.get(j), LEFT_WALL, RIGHT_WALL, CEILING, FLOOR, bounciness, FRAME_MULTIPLIER);
             }
+        }
 
-            // Bouncing off the floor and accelerating due to gravity
-            if (rect.getY() < FLOOR && rect.getY() > CEILING)
-                rect.addVerticalSpeed(gravitationalConstant * gravityMultiplier);
-            else {
-                r = new Random();
-                rect.setFill(Color.rgb(r.nextInt(255), r.nextInt(255), r.nextInt(255)));
-                rect.multiplyVerticalSpeed(-bounciness);
-                rect.multiplyHorizontalSpeed(1 - bounciness * bounciness);
-                rect.setY(rect.getY() + rect.getVerticalSpeed());
-            }
-
-            // Bouncing off the walls
-            if (rect.getX() < LEFT_WALL || rect.getX() > RIGHT_WALL) {
-                r = new Random();
-                rect.setFill(Color.rgb(r.nextInt(255), r.nextInt(255), r.nextInt(255)));
-                rect.multiplyHorizontalSpeed(-bounciness);
-                rect.setX(rect.getX() + rect.getHorizontalSpeed());
-            }
-
-            // Moving horizontally and vertically
-            rect.setX(rect.getX() + rect.getHorizontalSpeed() * FRAME_MULTIPLIER);
-            rect.setY(rect.getY() + rect.getVerticalSpeed() * FRAME_MULTIPLIER);
+        for (Rect rect : rects) {
+            rect.addVerticalSpeed(gravitationalConstant);
+            rect.step(FRAME_MULTIPLIER);
         }
     }
 }
