@@ -13,6 +13,10 @@
     <name>JavaFX-Playground</name>
     <url>https://github.com/ReptilianHitman/JavaFX-Playground</url>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.openjfx</groupId>
@@ -32,10 +36,18 @@
                     <execution>
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>${mainClass}</mainClass>
+                            <mainClass>Main</mainClass>
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>21</source>
+                    <target>21</target>
+                </configuration>
             </plugin>
         </plugins>
     </build>
